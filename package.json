@@ -100,5 +100,18 @@
   "eslintConfig": {
     "extends": "react-app"
   },
-  "proxy": "https://api.github.com"
+  "proxy": {
+    "/user": {
+      "target": "https://api.github.com",
+      "changeOrigin": true
+    },
+    "/user/star": {
+      "target": "https://api.github.com",
+      "changeOrigin": true
+    },
+    "/login": {
+      "target": "https://github.com",
+      "changeOrigin": true
+    }
+  }
 }

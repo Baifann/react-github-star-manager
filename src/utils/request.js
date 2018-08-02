@@ -1,8 +1,9 @@
 import axios from 'axios'
+import globalData from './globalData'
 
 // create an axios instance
 const service = axios.create({
-  baseURL: process.env.BASE_API, // api的base_url
+  // baseURL: process.env.BASE_API, // api的base_url
   timeout: 15000 // request timeout
 })
 
@@ -12,7 +13,7 @@ service.interceptors.request.use(config => {
   // 增加token
   // if (store.getters.token) {
   //   // 让每个请求携带token-- ['X-Token']为自定义key 请根据实际情况自行修改
-  //   config.headers['X-Token'] = getToken()
+    config.headers['Authorization'] = `token ${globalData.token}`
   // }
   return config
 }, error => {

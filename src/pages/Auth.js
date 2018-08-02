@@ -4,35 +4,44 @@ import { Button } from 'antd'
 import globalData from '../utils/globalData'
 import StringUtils from '../utils/stringUtils'
 import { Redirect } from 'react-router-dom'
-
+import Api from '../utils/api'
 class Auth extends Component {
 
   constructor(props) {
     super(props)
 
     this.onClickAuth = this.onClickAuth.bind(this)
-    this.hasToken = false
+    this.hasCode = false
     
     this.state = {
       authUrl: 'https://github.com/login/oauth/authorize',
-      hasToken: false
+      hasCode: false,
+      isTokenError: false
     }
   }
 
   componentWillUpdate(nextProps) {
     console.log('componentWillUpdate', nextProps)
+    // 判断token是否存在如果存在直接跳转到star页面
+    if (globalData.token) {
+      this.setState({
+        hasCode: true
+      })
+      return;
+    }
 
-    this.saveTokenByUrl(nextProps.location.search)
+    // 从url当中设置数据
+    this.saveCodeByUrl(nextProps.location.search)
   }
 
   componentDidMount() {
     this.initAuthUrl()
     
 
-    console.log("componentDidMount", this.hasToken)
+    console.log("componentDidMount", this.hasCode)
 
     this.setState({
-      hasToken: this.hasToken
+      hasCode: this.hasCode
     })
   }
 
@@ -71,30 +80,62 @@ class Auth extends Component {
   /**
    * 保存token
    */
-  saveTokenByUrl(url) {
+  saveCodeByUrl(url) {
     if (StringUtils.isBlank(url)) {
       return
     }
     
+
+    let code;
     if (url.indexOf('code') >= 0) {
-      const token = StringUtils.getQueryVariable('code')
-      globalData.setToken(token) 
+      code = StringUtils.getQueryVariable('code')
+      globalData.setCode(code) 
       // 跳转到 star界面
-      this.hasToken = true
+      this.hasCode = true
     } else {
-      this.hasToken = false
+      this.hasCode = false
     }
+    console.log("saveCodeByUrl", code)
+    this.auth(code)
 
-    this.setState({
-      hasToken: this.hasToken
+    console.log("saveTokenByUrl", this.hasCode)
+  }
+
+
+  /**
+   * 获取token
+   */
+  auth(code) {
+    Api.auth(code).then((res) => {
+      console.log(res)
+      this.handleAuthSuccessResponse(res)
+    }).catch(e => {
+      console.log(e)
     })
+  }
 
-    console.log("saveTokenByUrl", this.hasToken)
+  handleAuthSuccessResponse(res) {
+    if (res.data.hasOwnProperty('access_token')) {
+      const token = res.data.access_token;
+      globalData.setToken(token);
+      this.setState({
+        hasCode: this.hasCode
+      })
+    } else {
+      this.setState({
+        isTokenError: true
+      })
+    }
   }
 
   render() {
-    console.log("render", this.state.hasToken)
-    if (this.state.hasToken) {
+    console.log("render", this.state.hasCode)
+    if (this.state.isTokenError) {
+      return (
+        <Redirect to="/"/>
+      )
+    }
+    if (this.state.hasCode) {
       return (
         <Redirect to="/star" />
       )
