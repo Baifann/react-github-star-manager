@@ -1,10 +1,15 @@
 import axios from 'axios'
 import globalData from './globalData'
 
+const https = require('https');
+
 // create an axios instance
 const service = axios.create({
+  httpsAgent: new https.Agent({  
+    rejectUnauthorized: false
+  }),
   // baseURL: process.env.BASE_API, // api的base_url
-  timeout: 15000 // request timeout
+  timeout: 50000 // request timeout
 })
 
 // request interceptor

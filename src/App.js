@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import './App.css'
+import './reset.css'
 import 'antd/dist/antd.css'
 import Auth from './pages/Auth.js'
 import Star from './pages/star/Star'

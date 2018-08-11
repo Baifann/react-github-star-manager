@@ -31,7 +31,23 @@ const Api = {
    * star的项目
    */
   starred(page) {
-    return request.get(`/user/starred?page=${page}`)
+    return request.get(`http://localhost:3000/user/starred?page=${page}`)
+  },
+
+  /**
+   * 获取项目的readme
+   */
+  readMe(data) {
+    const headers = {
+      "Accept": "application/vnd.github.v3.html"
+    }
+    const url = `https://api.github.com/repos/${data.owner}/${data.repo}/readme`;
+    // return request.get(`/repos/${data.owner}/${data.repo}/readme`);
+    return request({
+      method: 'get',
+      url,
+      headers
+    })
   }
 }
 
