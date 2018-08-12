@@ -1,0 +1,18 @@
+.star {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.star-list-container {
+  overflow-y: scroll;
+  height: 100%;
+}
+
+.content-container {
+  height: calc(100vh - 100px);
+}
+
+.md-container {
+  height: calc(100vh - 100px);
+  overflow-y: scroll;
+}

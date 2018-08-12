@@ -31,7 +31,7 @@ const Api = {
    * star的项目
    */
   starred(page) {
-    return request.get(`http://localhost:3000/user/starred?page=${page}`)
+    return request.get(`/user/starred?page=${page}`)
   },
 
   /**

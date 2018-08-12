@@ -85,10 +85,10 @@ class Star extends Component {
 
   render() {
     return (
-      <div className="Star">
+      <div className="star">
         <Head head={this.state.userInfo.avatar_url} />
-        <Row>
-          <Col span={12}>
+        <Row className="content-container">
+          <Col span={12} className="star-list-container">
             <List
               itemLayout="horizontal"
               dataSource={this.state.tableData}
@@ -100,7 +100,9 @@ class Star extends Component {
             />
           </Col>
           <Col span={12}>
-              <ResInfo resSrc={this.state.rawMdData}/>
+              <div className="md-container">
+                <ResInfo resSrc={this.state.rawMdData} />
+              </div>
           </Col>
         </Row>
       </div>
