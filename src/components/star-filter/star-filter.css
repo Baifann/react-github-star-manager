@@ -1,0 +1,9 @@
+.icon-refresh {
+  width: 20px;
+  height: 20px;
+  fill: #606f7b; }
+
+.title-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; }

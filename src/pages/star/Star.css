@@ -2,6 +2,11 @@
   height: 100vh;
   overflow: hidden; }
 
+.control-list-container {
+  overflow-y: scroll;
+  height: 100%;
+  padding: 20px 10px; }
+
 .star-list-container {
   overflow-y: scroll;
   height: 100%; }

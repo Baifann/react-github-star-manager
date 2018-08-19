@@ -6,6 +6,7 @@ import { List, Avatar, Row, Col } from 'antd';
 import Api from '../../utils/api';
 import Head from '../../components/Head/Head';
 import ResInfo from '../../components/resInfo/resInfo';
+import ControlList from '../../components/control/controlList';
 
 class Star extends Component {
   constructor(props) {
@@ -14,9 +15,10 @@ class Star extends Component {
     this.state = {
       tableData: [],
       userInfo: {},
-      rawMdData: ""
+      rawMdData: ''
     };
 
+    this.onClickRefresh = this.onClickRefresh.bind(this);
   }
 
   componentDidMount() {
@@ -80,31 +82,41 @@ class Star extends Component {
       this.setState({
         rawMdData
       });
-    }); 
+    });
+  }
+
+  onClickRefresh() {
+    this.getStarFromWeb();
   }
 
   render() {
     return (
       <div className="star">
-        <Head head={this.state.userInfo.avatar_url} />
+        <Head head={this.state.userInfo.avatar_url} />{' '}
         <Row className="content-container">
-          <Col span={12} className="star-list-container">
+          <Col span={4} className="control-list-container bg-blue-darkest">
+            <ControlList onClickRefresh={this.onClickRefresh}/>
+          </Col>{' '}
+          <Col span={4} className="star-list-container">
             <List
               itemLayout="horizontal"
               dataSource={this.state.tableData}
               renderItem={item => (
                 <List.Item>
-                  <List.Item.Meta title={item.full_name} onClick={this.onClickResItem.bind(this, item)} />
+                  <List.Item.Meta
+                    title={item.full_name}
+                    onClick={this.onClickResItem.bind(this, item)}
+                  />{' '}
                 </List.Item>
               )}
-            />
-          </Col>
-          <Col span={12}>
-              <div className="md-container">
-                <ResInfo resSrc={this.state.rawMdData} />
-              </div>
-          </Col>
-        </Row>
+            />{' '}
+          </Col>{' '}
+          <Col span={16}>
+            <div className="md-container">
+              <ResInfo resSrc={this.state.rawMdData} />{' '}
+            </div>{' '}
+          </Col>{' '}
+        </Row>{' '}
       </div>
     );
   }
