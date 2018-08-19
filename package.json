@@ -115,5 +115,8 @@
       "target": "https://github.com",
       "changeOrigin": true
     }
+  },
+  "devDependencies": {
+    "react-svg-loader": "^2.1.0"
   }
 }
