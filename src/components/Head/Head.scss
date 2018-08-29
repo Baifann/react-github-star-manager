@@ -1,7 +1,25 @@
 .head {
+  position: relative;
+  height: 72px;
+  background-color: #21a179;
+
   .img-head {
-    width: 100px;
-    height: 100px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
+  }
+
+  .head-container {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    right: 50px;
+    transform: translateY(-50%);
+  }
+
+  .title-user-name {
+    color: white;
+    margin-left: 5px;
   }
 }

@@ -1,4 +1,39 @@
 .star-list-container {
   display: flex;
   flex-direction: column;
+
+  .choose-active::before {
+    -webkit-transition: -webkit-transform .15s ease-in-out;
+    transition: -webkit-transform .15s ease-in-out;
+    transition: transform .15s ease-in-out;
+    transition: transform .15s ease-in-out,-webkit-transform .15s ease-in-out;
+    -webkit-transform: translate3d(-4px,0,0);
+    transform: translate3d(-4px,0,0);
+    background-color: #21a179;
+    content: "";
+    display: block;
+    width: 8px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0px;
+  }
+
+  .choose-active {
+    box-shadow: inset 0 2px 4px 0 rgba(0,0,0,.06);
+    background-color: #f8fafc;
+  }
+
+  .transition-bg {
+    transition: .15s ease;
+  }
+
+  .star-item:hover {
+    background-color: #f8fafc;
+    transition: .5s;
+  }
+
+  .star-item {
+    position: relative;
+  }
 }

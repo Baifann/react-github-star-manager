@@ -6,6 +6,7 @@ class StarList extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      currentId: -1
     };
     
   }
@@ -16,6 +17,10 @@ class StarList extends Component {
   onClickResItem(item) {
     console.log('onClickItem', item);
     this.props.onClickResItem(item);
+
+    this.setState({
+      currentId: item.id
+    });
   }
 
   render() {
@@ -24,7 +29,10 @@ class StarList extends Component {
     return (
       <div className="star-list-container">
         {tableData.map((item) =>
-          <StarListItem item={item} onClickResItem={this.onClickResItem.bind(this, item)}/>
+          <div className={`star-item transition-bg ${this.state.currentId === item.id?`choose-active`:``}`}>
+          <StarListItem
+            key={item.id} item={item} onClickResItem={this.onClickResItem.bind(this, item)}/>
+          </div>
         )}
       </div>
     );

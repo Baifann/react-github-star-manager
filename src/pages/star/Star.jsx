@@ -116,21 +116,21 @@ class Star extends Component {
   render() {
     return (
       <div className="star">
-        <Head head={this.state.userInfo.avatar_url} />{' '}
+        <Head head={this.state.userInfo.avatar_url} userName={this.state.userInfo.login}/>
         <Row className="content-container">
-          <Col span={4} className="control-list-container bg-blue-darkest">
+          <Col span={3} className="control-list-container bg-blue-darkest">
             <ControlList ref="controlList" onClickRefresh={this.onClickRefresh}/>
-          </Col>{' '}
-          <Col span={4} className="star-list-container">
+          </Col>
+          <Col span={5} className="star-list-container">
             <StarList tableData={this.state.tableData}
               onClickResItem={this.onClickResItem.bind(this)}/>
-          </Col>{' '}
+          </Col>
           <Col span={16}>
             <div className="md-container">
-              <ResInfo resSrc={this.state.rawMdData} />{' '}
-            </div>{' '}
-          </Col>{' '}
-        </Row>{' '}
+              <ResInfo resSrc={this.state.rawMdData} />
+            </div>
+          </Col>
+        </Row>
       </div>
     );
   }

@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
 import './star-list-item.css';
+ /* eslint-disable */
+ import Star from '-!svg-react-loader!../../assets/img/star.svg';
+ import Watch from '-!svg-react-loader!../../assets/img/watch.svg';
+ /* eslint-enable */
+
 
 class StarListItem extends Component {
   constructor(props) {
@@ -21,11 +26,15 @@ class StarListItem extends Component {
       <div className="star-list-item-container" onClick={this.onClickResItem.bind(this, this.props.item)}>
         <h3 className="title-repo">{this.props.item.full_name}</h3>
         <p className="title-description">{this.props.item.description}</p>
-        <li className="title-language">{this.props.item.language}</li>
+        
+        {
+          this.props.item.language && 
+          <div className="title-language">{this.props.item.language}</div>
+        }
 
         <div className="bottom-container">
-          <span className="title-star">{this.props.item.stargazers_count}</span>
-          <span className="title-watch">{this.props.item.watchers_count}</span>
+          <div className="title-star"><Star className="icon-star"/><span className="title-info">{this.props.item.stargazers_count}</span></div>
+          <div className="title-watch"><Watch className="icon-watch"/><span className="title-info">{this.props.item.forks_count}</span></div>
         </div>
       </div>
     );

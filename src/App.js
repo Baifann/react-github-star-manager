@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import './App.css'
 import './reset.css'
 import 'antd/dist/antd.css'
-import Auth from './pages/Auth.js'
+import Auth from './pages/Auth'
 import Star from './pages/star/Star'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 class App extends Component {

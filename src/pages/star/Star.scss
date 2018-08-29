@@ -1,3 +1,5 @@
+@import '../../variable.scss';
+
 .star {
   height: 100vh;
   overflow: hidden;
@@ -12,13 +14,15 @@
 .star-list-container {
   overflow-y: scroll;
   height: 100%;
+  border-right: 1px solid $borderColor;
 }
 
 .content-container {
-  height: calc(100vh - 100px);
+  height: calc(100vh - 72px);
 }
 
 .md-container {
-  height: calc(100vh - 100px);
+  height: calc(100vh - 72px);
   overflow-y: scroll;
+  padding: 1rem;
 }
