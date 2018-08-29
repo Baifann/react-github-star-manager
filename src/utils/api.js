@@ -7,7 +7,7 @@ const Api = {
    * 获取用户信息
    */
   getAuthenticatedUser() {
-    return request.get(`/user`)
+    return request.get(`http://localhost:8081/api/user`)
   },
 
   /**
@@ -15,8 +15,7 @@ const Api = {
    */
   auth(code) {
     console.log(code)
-    let url = '/login/oauth/access_token'
-    url = url + `?client_id=${globalData.CLIENT_ID}&client_secret=${globalData.CLIENT_SECRET}&code=${code}`
+    let url = `http://localhost:8081/api/auth?code=${code}`
     const headers = {
       "Accept": "application/json"
     }
@@ -31,7 +30,7 @@ const Api = {
    * star的项目
    */
   starred(page) {
-    return request.get(`/user/starred?page=${page}`)
+    return request.get(`http://localhost:8081/api/stars?page=${page}`)
   },
 
   /**
