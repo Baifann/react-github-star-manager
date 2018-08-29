@@ -9,6 +9,7 @@ class StarFilter extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      btnRefreshClass: 'btn-refresh'
     };
 
 
@@ -18,6 +19,9 @@ class StarFilter extends Component {
   componentDidMount() {
   }
 
+  /**
+   * 点击刷新回调
+   */
   onClickRefresh() {
     console.log('refresh')
 
@@ -26,12 +30,32 @@ class StarFilter extends Component {
     }
   }
 
+  /**
+   * 刷新
+   */
+  onRefreshStart() {
+    console.log('start-filter', 'refresh start');
+    this.setState({
+      btnRefreshClass: 'btn-refresh loading'
+    });
+  }
+
+  /**
+   * 刷新结束回调
+   */
+  onRefreshEnd() {
+    console.log('start-filter', 'refresh end');
+    this.setState({
+      btnRefreshClass: 'btn-refresh'
+    });
+  }
+
   render() {
     return (
       <div className="star-filter">
         <div className="title-container">
           <h3 className="title-gray-dark">STARS</h3>
-          <button onClick={this.onClickRefresh}>
+          <button className={this.state.btnRefreshClass} onClick={this.onClickRefresh}>
             <Refresh className="icon-refresh text-grey"/>
           </button>
         </div>

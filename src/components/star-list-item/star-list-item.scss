@@ -1,0 +1,10 @@
+.star-list-item-container {
+  display: block;
+  border-bottom: 1px solid #dae1e7;
+  cursor: pointer;
+
+  .bottom-container {
+    display: flex;
+    align-items: center;
+  }
+}

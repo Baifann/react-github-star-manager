@@ -1,9 +1,30 @@
 .icon-refresh {
   width: 20px;
-  height: 20px;
-  fill: #606f7b; }
+  height: 20px; }
 
 .title-container {
   display: flex;
   justify-content: space-between;
   align-items: center; }
+
+.btn-refresh {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  fill: #606f7b;
+  display: flex;
+  justify-content: center;
+  align-content: center; }
+
+.loading {
+  animation: 1s loading infinite both linear; }
+
+@keyframes loading {
+  0% {
+    transform: rotate(0deg); }
+  100% {
+    transform: rotate(365deg); } }
+
+.btn-refresh:hover {
+  opacity: 0.5;
+  fill: #95A2AC; }

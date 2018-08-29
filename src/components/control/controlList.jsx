@@ -42,10 +42,25 @@ class ControlList extends Component {
     this.props.onClickRefresh();
   }
 
+  /**
+   * 刷新
+   */
+  onRefreshStart() {
+    console.log('onRefreshStart', 'controlList');
+    this.refs.starFilter.onRefreshStart();
+  }
+  
+  /**
+   * 刷新结束回调
+   */
+  onRefreshEnd() {
+    this.refs.starFilter.onRefreshEnd();
+  }
+
   render() {
     return (
       <div className="control-list">
-        <StarFilter onClickRefresh={this.onClickRefresh}/>
+        <StarFilter ref="starFilter" onClickRefresh={this.onClickRefresh}/>
         <Input ref="myInput"  placeholder="请输入标签" onPressEnter={this.onKeyEnter.bind(this)}/>
         <List
           dataSource={this.state.tagTableData}
