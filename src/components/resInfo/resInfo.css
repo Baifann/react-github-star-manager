@@ -1,0 +1,27 @@
+.img-no-selected {
+  width: 16rem;
+  margin-bottom: 2rem;
+  height: auto; }
+
+.resinfo-container {
+  padding: 1rem; }
+
+.resinfo-container-no-selected {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f1f5f8;
+  height: 100%; }
+  .resinfo-container-no-selected .no-selected-container {
+    display: flex;
+    flex-direction: column; }
+  .resinfo-container-no-selected .title-no-selected {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    font-weight: 700;
+    border-radius: .25rem;
+    background-color: #b8c2cc;
+    color: #fff;
+    text-align: center; }

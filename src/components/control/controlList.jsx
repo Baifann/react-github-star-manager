@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Input, List } from 'antd';
 import './controlList.css';
 import StarFilter from '../star-filter/star-filter';
-
+import TagList from '../tag-list/tag-list';
 class ControlList extends Component {
   constructor(props) {
     super(props);
@@ -23,7 +23,7 @@ class ControlList extends Component {
     const input = this.refs.myInput.input.value;
 
     const tagTableData = this.state.tagTableData;
-    tagTableData.push(input);
+    tagTableData.push({title: input});
 
     this.setState({
       tagTableData
@@ -62,10 +62,7 @@ class ControlList extends Component {
       <div className="control-list">
         <StarFilter ref="starFilter" onClickRefresh={this.onClickRefresh}/>
         <Input ref="myInput"  placeholder="请输入标签" onPressEnter={this.onKeyEnter.bind(this)}/>
-        <List
-          dataSource={this.state.tagTableData}
-          renderItem={item => <List.Item>{item}</List.Item>}
-        />
+        <TagList tableData={this.state.tagTableData}/>
       </div>
     );
   }

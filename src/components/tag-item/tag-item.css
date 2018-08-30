@@ -1,0 +1,13 @@
+.tag-item-container {
+  transition: transform .25s ease,opacity .25s ease,color .25s ease,background-color .25s ease,-webkit-transform .25s ease;
+  font-size: 1rem;
+  padding-right: .25rem;
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  fill: #b8c2cc; }
+  .tag-item-container .tag-icon {
+    width: 24px;
+    height: 14px; }
