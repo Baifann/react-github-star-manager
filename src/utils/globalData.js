@@ -6,6 +6,7 @@ const globalData = {
   _userInfo: null,
 
   setToken(token) {
+    this.token = token;
     sessionStorage.setItem("token", token)
   },
 
