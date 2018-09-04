@@ -5,6 +5,7 @@ import globalData from '../utils/globalData'
 import StringUtils from '../utils/stringUtils'
 import { Redirect } from 'react-router-dom'
 import Api from '../utils/api'
+import utils from '../utils/utils';
 class Auth extends Component {
 
   constructor(props) {
@@ -118,6 +119,7 @@ class Auth extends Component {
     if (res.data.hasOwnProperty('access_token')) {
       const token = res.data.access_token;
       globalData.setToken(token);
+      // utils.initHeaders();
       this.setState({
         hasCode: this.hasCode
       })
