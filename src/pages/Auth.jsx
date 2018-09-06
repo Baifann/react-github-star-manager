@@ -5,7 +5,6 @@ import globalData from '../utils/globalData'
 import StringUtils from '../utils/stringUtils'
 import { Redirect } from 'react-router-dom'
 import Api from '../utils/api'
-import utils from '../utils/utils';
 class Auth extends Component {
 
   constructor(props) {
@@ -25,9 +24,7 @@ class Auth extends Component {
     console.log('componentWillUpdate', nextProps)
     // 判断token是否存在如果存在直接跳转到star页面
     if (globalData.token) {
-      this.setState({
-        hasCode: true
-      })
+      this.go2star();
       return;
     }
 
@@ -38,12 +35,7 @@ class Auth extends Component {
   componentDidMount() {
     this.initAuthUrl()
     
-
-    console.log("componentDidMount", this.hasCode)
-
-    this.setState({
-      hasCode: this.hasCode
-    })
+    console.log("componentDidMount", this.hasCode, this.props)
   }
 
   /**
@@ -60,7 +52,7 @@ class Auth extends Component {
     let authUrl = this.state.authUrl
     authUrl = `${authUrl}?client_id=${globalData.CLIENT_ID}`
     authUrl = `${authUrl}&scope=${this.getAuthScop()}`
-    authUrl = `${authUrl}&redirect_uri=http://localhost:3000`
+    authUrl = `${authUrl}&redirect_uri=http://localhost:3000/auth`
     this.setState({
       authUrl
     })
@@ -115,33 +107,36 @@ class Auth extends Component {
     })
   }
 
+  /**
+   * 处理授权成功的情况
+   */
   handleAuthSuccessResponse(res) {
     if (res.data.hasOwnProperty('access_token')) {
       const token = res.data.access_token;
       globalData.setToken(token);
       // utils.initHeaders();
-      this.setState({
-        hasCode: this.hasCode
-      })
+      this.go2star();
     } else {
-      this.setState({
-        isTokenError: true
-      })
+      this.go2home();
     }
   }
 
+  /**
+   * 返回首页
+   */
+  go2home() {
+    this.props.history.replace('/auth');
+  }
+
+  /**
+   * 前往star界面
+   */
+  go2star() {
+    this.props.history.push('/star');
+  } 
+
   render() {
     console.log("render", this.state.hasCode)
-    if (this.state.isTokenError) {
-      return (
-        <Redirect to="/"/>
-      )
-    }
-    if (this.state.hasCode) {
-      return (
-        <Redirect to="/star" />
-      )
-    }
     return (
       <div className="Auth">
         <Button className="btn-auth" onClick={this.onClickAuth}>
