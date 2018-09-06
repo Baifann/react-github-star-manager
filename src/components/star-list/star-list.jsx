@@ -29,9 +29,9 @@ class StarList extends Component {
     return (
       <div className="star-list-container">
         {tableData.map((item, index) =>
-          <div className={`star-item transition-bg ${this.state.currentId === item.id?`choose-active`:``}`}>
+          <div key={index} className={`star-item transition-bg ${this.state.currentId === item.id?`choose-active`:``}`}>
           <StarListItem
-            key={item.id} item={item} onClickResItem={this.onClickResItem.bind(this, item)}/>
+             item={item} onClickResItem={this.onClickResItem.bind(this, item)}/>
           </div>
         )}
       </div>
