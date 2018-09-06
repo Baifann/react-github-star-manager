@@ -3,7 +3,8 @@
   border-bottom: 1px solid #dae1e7;
   cursor: pointer;
   box-sizing: border-box;
-  padding: 1.15rem; }
+  padding: 1.15rem;
+  flex-direction: column; }
   .star-list-item-container .bottom-container {
     display: flex;
     align-items: center;
@@ -41,4 +42,17 @@
     padding-right: .5rem;
     padding-top: .25rem;
     margin-right: .5rem;
+    padding-bottom: .25rem;
     border-radius: 9999px; }
+  .star-list-item-container .tag-container {
+    display: flex;
+    flex-wrap: wrap; }
+  .star-list-item-container .title-href {
+    font-weight: 700;
+    color: #8795a1;
+    font-size: .75rem;
+    text-decoration: #8795a1;
+    margin-left: 1rem;
+    text-decoration: underline #8795a1; }
+  .star-list-item-container .title-href:hover {
+    text-decoration: none; }
