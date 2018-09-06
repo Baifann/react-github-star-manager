@@ -104,6 +104,7 @@ class Star extends Component {
   onRefreshStart() {
     console.log(this.refs.controlList);
     this.refs.controlList.onRefreshStart();
+    this.refs.head.onRefreshStart();
   }
   
   /**
@@ -111,12 +112,13 @@ class Star extends Component {
    */
   onRefreshEnd() {
     this.refs.controlList.onRefreshEnd();
+    this.refs.head.onRefreshEnd();
   }
 
   render() {
     return (
       <div className="star">
-        <Head head={this.state.userInfo.avatar_url} userName={this.state.userInfo.login}/>
+        <Head ref="head" head={this.state.userInfo.avatar_url} userName={this.state.userInfo.login}/>
         <Row className="content-container">
           <Col span={3} className="control-list-container bg-blue-darkest">
             <ControlList ref="controlList" onClickRefresh={this.onClickRefresh}/>

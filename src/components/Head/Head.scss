@@ -35,4 +35,26 @@
   .drop-down-menu {
     cursor: pointer;
   }
+
+  .fetch-container {
+    color: white;
+    margin-left: 1.5rem;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+  }
+
+  .img-refresh {
+    margin-left: .5rem;
+  }
+
+  .loading {
+    animation: 1s loading infinite both linear;
+  }
+  
+  @keyframes loading {
+    0% { transform: rotate(0deg) }
+    100% {transform: rotate(365deg)}
+  }
+  
 }
