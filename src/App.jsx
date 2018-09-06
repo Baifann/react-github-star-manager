@@ -4,7 +4,7 @@ import './reset.css'
 import 'antd/dist/antd.css'
 import Auth from './pages/Auth'
 import Star from './pages/star/Star'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter, Route, Redirect } from 'react-router-dom'
 class App extends Component {
   constructor(props) {
     super(props)
@@ -17,12 +17,13 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Router>
+        <BrowserRouter basename="/">
           <div>
             <Route exact path="/" component={Auth} />
+            <Route path="/auth" component={Auth} />
             <Route path="/star" component={Star} />
           </div>
-        </Router>
+        </BrowserRouter>
       </div>
     )
   }
