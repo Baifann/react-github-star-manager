@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import './Head.css';
-import globalData from '../../utils/globalData';
-import StringUtils from '../../utils/stringUtils';
 import { Menu, Dropdown, Icon } from 'antd';
+import Logo from '../../assets/img/logo.svg';
 
 class Head extends Component {
   constructor(props) {
@@ -15,26 +14,43 @@ class Head extends Component {
     return (
       <Menu>
         <Menu.Item key="0">
-          <a href="http://www.alipay.com/">1st menu item</a>
+          <span>Settings</span>
         </Menu.Item>
         <Menu.Item key="1">
-          <a href="http://www.taobao.com/">2nd menu item</a>
+          <a href="http://www.taobao.com/">GitHub</a>
         </Menu.Item>
-        <Menu.Divider />
-        <Menu.Item key="3">3rd menu item</Menu.Item>
+        <Menu.Item key="3">
+          <span className="">Logout</span>
+        </Menu.Item>
       </Menu>
     );
   }
 
   render() {
-    return (
-      <div className="head">
+    let headContainer = null;
+    if (this.props.head) {
+      headContainer = (
         <div className="head-container">
           <img className="img-head" src={this.props.head} alt="head" />
-          <Dropdown className="drop-down-menu" overlay={this.getMenu()} trigger={['click']}>
-            <span className="title-user-name">{this.props.userName}</span>
+          <Dropdown
+            className="drop-down-menu"
+            overlay={this.getMenu()}
+            trigger={['click']}
+          >
+            <span className="title-user-name">
+              {this.props.userName}
+              <Icon type="down" />
+            </span>
           </Dropdown>
         </div>
+      );
+    } else {
+      headContainer = '';
+    }
+    return (
+      <div className="head">
+        <img className="img-logo" src={Logo} alt="logo" />
+        {headContainer}
       </div>
     );
   }

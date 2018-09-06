@@ -2,6 +2,10 @@
   position: relative;
   height: 72px;
   background-color: #21a179;
+  display: flex;
+  align-items: center;
+  padding-left: 2rem;
+  padding-right: 2rem;
 
   .img-head {
     width: 40px;
@@ -21,5 +25,14 @@
   .title-user-name {
     color: white;
     margin-left: 5px;
+  }
+
+  .img-logo {
+    width: 178px;
+    height: auto;
+  }
+
+  .drop-down-menu {
+    cursor: pointer;
   }
 }
