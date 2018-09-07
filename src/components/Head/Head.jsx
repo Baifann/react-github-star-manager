@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './Head.css';
+import './Head.scss';
 import { Menu, Dropdown, Icon } from 'antd';
 import Logo from '../../assets/img/logo.svg';
 import Refresh from '../../assets/img/status-spinner.svg';
@@ -88,11 +88,11 @@ class Head extends Component {
       loadingContainer = (
         <div className="fetch-container">
           <span className="title-fetch">Refreshing stars...</span>
-          <img className={`img-refresh ${this.state.imgClassName}`} src={Refresh} alt="fetch" width="16" height="16"/>
+          <img className={`img-refresh ${this.state.imgClassName}`} src={require('../../assets/img/status-spinner.svg')} alt="fetch" width="16" height="16"/>
         </div>
       );
     } else {
-      loadingContainer = null
+      loadingContainer = null;
     }
     return loadingContainer;
   }

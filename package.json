@@ -53,12 +53,8 @@
     "whatwg-fetch": "2.0.3"
   },
   "scripts": {
-    "build-css": "node-sass-chokidar src/ -o src/",
-    "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
-    "start-js": "react-scripts start",
-    "start": "npm-run-all -p watch-css start-js",
-    "build-js": "react-scripts build",
-    "build": "npm-run-all build-css build-js",
+    "start": "node scripts/start.js",
+    "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom"
   },
   "jest": {
@@ -104,10 +100,6 @@
     "extends": "react-app"
   },
   "proxy": {
-    "/user": {
-      "target": "https://api.github.com",
-      "changeOrigin": true
-    },
     "/user/star": {
       "target": "https://api.github.com",
       "changeOrigin": true
@@ -118,7 +110,9 @@
     }
   },
   "devDependencies": {
+    "node-sass": "^4.9.3",
     "react-svg-loader": "^2.1.0",
-    "redux-devtools": "^3.4.1"
+    "redux-devtools": "^3.4.1",
+    "sass-loader": "^7.1.0"
   }
 }
