@@ -22,7 +22,7 @@ const globalData = {
   getUserinfo() {
     let userInfo = null
     try {
-      userInfo = sessionStorage.getItem('userInfo');
+      userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
     } catch (error) {
       
     } finally {
