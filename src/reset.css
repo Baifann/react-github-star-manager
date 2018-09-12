@@ -40,3 +40,14 @@ button:focus {
 input{
   border: 0;
 }
+
+button {
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  border: none;
+}
+
+button:hover {
+  border: none;
+}
