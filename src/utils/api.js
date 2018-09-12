@@ -1,4 +1,4 @@
-import request  from "./request";
+import request from "./request";
 import globalData from "./globalData";
 
 
@@ -47,6 +47,73 @@ const Api = {
       url,
       headers
     })
+  },
+
+  /**
+   * 添加标签
+   */
+  addTag(holder) {
+    // return request.get(`/repos/${data.owner}/${data.repo}/readme`);
+    const data = {
+      tag: holder.name
+    };
+    
+    const headers = {
+      userId: globalData.getUserinfo().id
+    }
+    return request({
+      method: 'post',
+      url: 'http://localhost:8081/api/tags',
+      data,
+      headers
+    })
+  },
+
+  /**
+   * 获取标签数据
+   */
+  getTag() {
+    const headers = {
+      userId: globalData.getUserinfo().id
+    }
+    return request({
+      method: 'get',
+      url: 'http://localhost:8081/api/tags',
+      headers
+    })
+  },
+
+  /**
+   * 更新标签
+   */
+  updateTag(holder) {
+    const headers = {
+      userId: globalData.getUserinfo().id
+    }
+    const data = {
+      name: holder.name
+    }
+    return request({
+      method: 'put',
+      url: `http://localhost:8081/api/tags/${holder.id}`,
+      headers,
+      data
+    });
+  },
+
+  /**
+   * 删除tag
+   */
+  deleteTag(holder) {
+    const headers = {
+      userId: globalData.getUserinfo().id
+    }
+    
+    return request({
+      method: 'delete',
+      url: `http://localhost:8081/api/tags/${holder.id}`,
+      headers
+    });
   }
 }
 
