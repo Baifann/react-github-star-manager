@@ -1,5 +1,5 @@
 .tag-item-container {
-  transition: transform .25s ease,opacity .25s ease,color .25s ease,background-color .25s ease,-webkit-transform .25s ease;
+  transition: transform .25s ease, opacity .25s ease, color .25s ease, background-color .25s ease, -webkit-transform .25s ease;
   font-size: 1rem;
   padding-right: .25rem;
   padding-top: .5rem;
@@ -13,5 +13,48 @@
     width: 24px;
     height: 14px;
   }
+
+  .btn-tag {
+    color: #b8c2cc;
+    padding-left: .5rem;
+    padding-right: .5rem;
+    background-color: #2B3A48;
+    border-radius: 8px;
+    border: none;
+    font-size: 0.85rem;
+  }
+
+  .title-tag {
+    flex-grow: 1;
+  }
+
+  .tag {
+    z-index: -1;
+  }
+
+  .btn-pop-over {
+    color: #b8c2cc;
+  }
 }
 
+.ant-popover-content {
+  .btn-delete {
+    background-color: red;
+    border: none;
+    color: #fff;
+    font-size: .875rem;
+    
+  }
+
+  .input-tag {
+    margin-bottom: .5rem;
+  }
+
+  .btn-save {
+    background-color: #21a179;
+    color: #fff;
+    border: none;
+    font-size: .875rem;
+    margin-bottom: .5rem;
+  }
+}
