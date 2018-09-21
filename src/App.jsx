@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import './App.css'
 import './reset.css'
 import 'antd/dist/antd.css'
-import Auth from './pages/Auth'
-import Star from './pages/star/Star'
+import Auth from './pages/auth'
+import Star from './pages/star/star'
 import { BrowserRouter, Route, Redirect } from 'react-router-dom'
 class App extends Component {
   constructor(props) {
