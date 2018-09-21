@@ -6,7 +6,7 @@ import { List, Avatar, Row, Col } from 'antd';
 import Api from '../../utils/api';
 import Head from '../../components/Head/Head';
 import ResInfo from '../../components/resInfo/resInfo';
-import ControlList from '../../components/control/controlList';
+import ControlList from '../../components/control/control-list';
 import StarList from '../../components/star-list/star-list';
 
 class Star extends Component {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Input, List } from 'antd';
-import './controlList.css';
+import './control-list.css';
 import StarFilter from '../star-filter/star-filter';
 import TagList from '../tag-list/tag-list';
 import Api from '../../utils/api';
