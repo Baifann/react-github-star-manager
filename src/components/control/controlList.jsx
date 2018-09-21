@@ -21,7 +21,7 @@ class ControlList extends Component {
   componentWillUpdate(nextProps) {}
 
   componentDidMount() {
-    this.getTagsFromWeb();
+    
   }
 
   /**

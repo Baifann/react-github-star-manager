@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './Star.css';
+import './star.scss';
 import globalData from '../../utils/globalData';
 import StringUtils from '../../utils/stringUtils';
 import { List, Avatar, Row, Col } from 'antd';
@@ -25,7 +25,6 @@ class Star extends Component {
 
   componentDidMount() {
     this.getUserInfo();
-    this.getStarFromWeb();
   }
 
   getUserInfo() {
@@ -38,11 +37,16 @@ class Star extends Component {
       });
   }
 
+  /**
+   * 获取完用户信息
+   */
   handleGetUserInfoSuccessResponse(res) {
     globalData.setUserInfo(res.data);
     this.setState({
       userInfo: res.data
     });
+    this.getStarFromWeb();
+    this.refs.controlList.getTagsFromWeb();
   }
 
   /**
