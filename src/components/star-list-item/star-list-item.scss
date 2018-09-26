@@ -53,7 +53,9 @@
   }
 
   .title-language {
-    display: inline;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: #5770e0;
     font-size: .75rem;
     color: #fff;
@@ -61,8 +63,10 @@
     padding-right: .5rem;
     padding-top: .25rem;
     margin-right: .5rem;
+    margin-bottom: .5rem;
     padding-bottom: .25rem;
     border-radius: 9999px;
+    border: none;
   }
 
   .tag-container {
@@ -81,5 +85,10 @@
 
   .title-href:hover {
     text-decoration: none;
+  }
+
+  .tag-container-son {
+    display: flex;
+    flex-wrap: wrap;
   }
 }

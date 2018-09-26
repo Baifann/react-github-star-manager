@@ -1,22 +1,25 @@
 import React, { Component } from 'react';
 import { Tag, Input, Tooltip, Icon } from 'antd';
-import './star-list-item.css';
+import './star-list-item.scss';
 /* eslint-disable */
 import Star from '-!svg-react-loader!../../assets/img/star.svg';
 import Watch from '-!svg-react-loader!../../assets/img/watch.svg';
+import Api from '../../utils/api';
 /* eslint-enable */
 
 class StarListItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tags: ['tag1'],
+      tags: [],
       inputVisible: false,
       inputValue: ''
     };
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    this.initTagsInLanguage();
+  }
 
   onClickResItem(item) {
     console.log('onClickItem', item);
@@ -41,6 +44,16 @@ class StarListItem extends Component {
     this.setState({ inputValue: e.target.value });
   };
 
+  /**
+   * 还原输入
+   */
+  resetInput = () => {
+
+  };
+
+  /**
+   * 点击输入框确认
+   */
   handleInputConfirm = () => {
     const state = this.state;
     const inputValue = state.inputValue;
@@ -54,55 +67,116 @@ class StarListItem extends Component {
       inputVisible: false,
       inputValue: ''
     });
+    this.addRepoTags2Web(tags);
   };
 
+  /**
+   * 返回ref
+   */
   saveInputRef = input => (this.input = input);
 
-  render() {
+  /**
+   * 将项目语言插入到tags中
+   */
+  initTagsInLanguage() {
+    const language = this.props.item.language;
+    if (language) {
+      let tags = [];
+      tags = [language, ...this.props.item.tags];
+      this.setState({
+        tags
+      });
+    }
+  }
+
+  /**
+   * 向服务器请求添加
+   */
+  addRepoTags2Web(tags) {
+    const desTags = this.getFilterTags(tags);
+    if (desTags.length >= 2) {
+      Api.updateRepoTags({
+        id: this.props.item.id,
+        tags: desTags
+      }).then(res => {
+        console.log(res);
+      });
+    } else {
+      Api.addRepoTags({
+        id: this.props.item.id,
+        tags: desTags
+      }).then(res => {
+        console.log(res);
+      });
+    }
+  }
+
+  /**
+   * 去除已第一个tags
+   */
+  getFilterTags(tags) {
+    console.log('getFilterTags', tags);
+    const desTags = [];
+    tags.map((tag, index) => {
+      if (index !== 0) {
+        desTags.push(tag);
+      }
+    });
+    return desTags;
+  }
+
+  /**
+   * 获取tag容器
+   */
+  getTagContainer = () => {
     const { tags, inputVisible, inputValue } = this.state;
-    const tagContainer = (
-      <div>
-        {tags.map((tag, index) => {
-          const isLongTag = tag.length > 20;
-          const tagElem = (
-            <Tag
-              key={tag}
-              closable={index !== 0}
-              afterClose={() => this.handleClose(tag)}
-            >
-              {isLongTag ? `${tag.slice(0, 20)}...` : tag}
-            </Tag>
-          );
-          return isLongTag ? (
-            <Tooltip title={tag} key={tag}>
-              {tagElem}
-            </Tooltip>
-          ) : (
-            tagElem
-          );
-        })}
-        {inputVisible && (
-          <Input
-            ref={this.saveInputRef}
-            type="text"
-            size="small"
-            style={{ width: 78 }}
-            value={inputValue}
-            onChange={this.handleInputChange}
-            onBlur={this.handleInputConfirm}
-            onPressEnter={this.handleInputConfirm}
-          />
-        )}
-        {!inputVisible && (
+    return (<div className="tag-container-son">
+      {tags.map((tag, index) => {
+        const isLongTag = tag.length > 20;
+        const tagElem = (
           <Tag
-            onClick={this.showInput}
-            style={{ background: '#fff', borderStyle: 'dashed' }}
+            key={tag}
+            closable={index !== 0}
+            afterClose={() => this.handleClose(tag)}
+            className="title-language"
           >
-            <Icon type="plus" /> New Tag
+            {isLongTag ? `${tag.slice(0, 20)}...` : tag}
           </Tag>
-        )}
-      </div>
-    );
+        );
+        return isLongTag ? (
+          <Tooltip title={tag} key={tag}>
+            {tagElem}
+          </Tooltip>
+        ) : (
+          tagElem
+        );
+      })}
+      {inputVisible && (
+        <Input
+          ref={this.saveInputRef}
+          type="text"
+          size="small"
+          style={{ width: 78 }}
+          value={inputValue}
+          onChange={this.handleInputChange}
+          onBlur={this.resetInput}
+          onPressEnter={this.handleInputConfirm}
+        />
+      )}
+      {!inputVisible && (
+        <Tag
+          onClick={this.showInput}
+          style={{ background: '#fff', borderStyle: 'dashed' }}
+        >
+          <Icon type="plus" /> New Tag
+        </Tag>
+      )}
+    </div>);
+  };
+  
+
+  render() {
+    const tagContainer = this.getTagContainer();
 
     return (
       <div
@@ -112,9 +186,6 @@ class StarListItem extends Component {
         <h3 className="title-repo">{this.props.item.full_name}</h3>
         <p className="title-description">{this.props.item.description}</p>
         <div className="tag-container">
-          {this.props.item.language && (
-            <div className="title-language">{this.props.item.language}</div>
-          )}
           {tagContainer}
         </div>
 

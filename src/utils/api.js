@@ -30,7 +30,16 @@ const Api = {
    * star的项目
    */
   starred(page) {
-    return request.get(`http://localhost:8081/api/stars?page=${page}`)
+    const headers = {
+      userId: globalData.getUserinfo().id
+    }
+
+    const url = `http://localhost:8081/api/stars?page=${page}`;
+    return request({
+      method: 'get',
+      url,
+      headers
+    })
   },
 
   /**
@@ -113,6 +122,46 @@ const Api = {
       method: 'delete',
       url: `http://localhost:8081/api/tags/${holder.id}`,
       headers
+    });
+  },
+
+  /**
+   * 添加仓库
+   */
+  addRepoTags(holder) {
+    const headers = {
+      userId: globalData.getUserinfo().id
+    }
+
+    const data = {
+      tags: holder.tags
+    }
+
+    return request({
+      method: 'post',
+      url: `http://localhost:8081/api/repo/tag/${holder.id}`,
+      headers,
+      data
+    });
+  },
+
+  /**
+   * 更新仓库
+   */
+  updateRepoTags(holder) {
+    const headers = {
+      userId: globalData.getUserinfo().id
+    }
+
+    const data = {
+      tags: holder.tags
+    }
+
+    return request({
+      method: 'put',
+      url: `http://localhost:8081/api/repo/tag/${holder.id}`,
+      headers,
+      data
     });
   }
 }
