@@ -6,6 +6,7 @@ import Star from '-!svg-react-loader!../../assets/img/star.svg';
 import Watch from '-!svg-react-loader!../../assets/img/watch.svg';
 import Api from '../../utils/api';
 /* eslint-enable */
+import Eventbus from '../../utils/eventbus';
 
 class StarListItem extends Component {
   constructor(props) {
@@ -26,10 +27,15 @@ class StarListItem extends Component {
     this.props.onClickResItem(item);
   }
 
-  handleClose = removedTag => {
+  handleClose = (removedTag, e) => {
+    console.log(e);
+    e.stopPropagation();
+
     const tags = this.state.tags.filter(tag => tag !== removedTag);
     console.log(tags);
     this.setState({ tags });
+
+    this.deleteRepoTags2web(tags);
   };
 
   showInput = (e) => {
@@ -48,7 +54,9 @@ class StarListItem extends Component {
    * 还原输入
    */
   resetInput = () => {
-
+    this.setState({
+      inputVisible: false
+    });
   };
 
   /**
@@ -67,6 +75,7 @@ class StarListItem extends Component {
       inputVisible: false,
       inputValue: ''
     });
+    Eventbus.emit('addTag', inputValue);
     this.addRepoTags2Web(tags);
   };
 
@@ -94,21 +103,25 @@ class StarListItem extends Component {
    */
   addRepoTags2Web(tags) {
     const desTags = this.getFilterTags(tags);
-    if (desTags.length >= 2) {
-      Api.updateRepoTags({
-        id: this.props.item.id,
-        tags: desTags
-      }).then(res => {
-        console.log(res);
-      });
-    } else {
-      Api.addRepoTags({
-        id: this.props.item.id,
-        tags: desTags
-      }).then(res => {
-        console.log(res);
-      });
-    }
+    Api.addRepoTags({
+      id: this.props.item.id,
+      tags: desTags
+    }).then(res => {
+      console.log(res);
+    });
+  }
+
+  /**
+   * 向服务器请求删除
+   */
+  deleteRepoTags2web(tags) {
+    const desTags = this.getFilterTags(tags);
+    Api.addRepoTags({
+      id: this.props.item.id,
+      tags: desTags
+    }).then(res => {
+      console.log(res);
+    });
   }
 
   /**
@@ -137,7 +150,7 @@ class StarListItem extends Component {
           <Tag
             key={tag}
             closable={index !== 0}
-            afterClose={() => this.handleClose(tag)}
+            onClose={(e) => this.handleClose(tag, e)}
             className="title-language"
           >
             {isLongTag ? `${tag.slice(0, 20)}...` : tag}

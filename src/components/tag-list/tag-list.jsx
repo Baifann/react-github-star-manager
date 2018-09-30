@@ -24,6 +24,13 @@ class TagList extends Component {
     this.props.onDeleteTagSuccess(id);
   }
 
+  /**
+   * 点击某一项
+   */
+  onClickItem = (item) => {
+    console.log(item);
+  }
+
   render() {
     const tableData = this.props.tableData;
 
@@ -33,6 +40,7 @@ class TagList extends Component {
           <TagItem
             item={item}
             key={index}
+            click={this.onClickItem(item)}
             onSaveTagSuccess={this.handleTagSaveSuccess}
             onDeleteSuccess={this.handleTagDeleteSuccess}
           />

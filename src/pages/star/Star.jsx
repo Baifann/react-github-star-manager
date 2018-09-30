@@ -54,10 +54,8 @@ class Star extends Component {
    */
   getStarFromWeb() {
     this.onRefreshStart();
-    
-    Api.starred(1).then(data => {
-      this.handleGetStarSuccessResponse(data);
-    });
+
+    this.refreshStar();
   }
 
   /**
@@ -65,12 +63,51 @@ class Star extends Component {
    */
   handleGetStarSuccessResponse(data) {
     console.log(data);
-    this.tableData = data.data;
-    this.setState({
-      tableData: this.tableData
-    });
+    if (!data.data || data.data.length === 0) {
+      if (this.tableData && this.tableData.length >= 0) {
+        this.setState({
+          tableData: this.tableData
+        });
+      }
+      this.onRefreshEnd();
+      return;
+    }
 
-    this.onRefreshEnd();
+    if (this.page === 1) {
+      this.tableData = data.data;
+    } else {
+      this.tableData = [...this.tableData, ...data.data];
+    }
+    console.log(data.data.length);
+    if (data.data.length !== 30) {
+      this.setState({
+        tableData: this.tableData
+      });
+      this.onRefreshEnd();
+    } else {
+      console.log('加载更多');
+      this.loadMoreStar();
+    }
+  }
+
+  /**
+   * 获取数据
+   */
+  refreshStar() {
+    this.page = 1;
+    Api.starred(this.page).then(data => {
+      this.handleGetStarSuccessResponse(data);
+    });
+  }
+
+  /**
+   * 加载更多
+   */
+  loadMoreStar() {
+    this.page++;
+    Api.starred(this.page).then(data => {
+      this.handleGetStarSuccessResponse(data);
+    });
   }
 
   /**
@@ -102,7 +139,7 @@ class Star extends Component {
     this.getStarFromWeb();
   }
 
-    /**
+  /**
    * 刷新
    */
   onRefreshStart() {
@@ -110,7 +147,7 @@ class Star extends Component {
     this.refs.controlList.onRefreshStart();
     this.refs.head.onRefreshStart();
   }
-  
+
   /**
    * 刷新结束回调
    */
@@ -119,17 +156,53 @@ class Star extends Component {
     this.refs.head.onRefreshEnd();
   }
 
+  /**
+   * 根据tag搜索数据
+   */
+  filterListByTag(tag) {
+    if (!this.tableData || this.tableData.length === 0) {
+      return;
+    }
+    const filterTableData = this.tableData.filter(item => {
+      return this.isIncludeInTags(item.tags, tag);
+    });
+
+    this.setState({
+      tableData: filterTableData
+    });
+  }
+
+  /**
+   * 标签数组当中是否包含
+   */
+  isIncludeInTags(tags, tag) {
+    if (!tags) {
+      return false;
+    }
+
+    return tags.includes(tag);
+  }
+
   render() {
     return (
       <div className="star">
-        <Head ref="head" head={this.state.userInfo.avatar_url} userName={this.state.userInfo.login}/>
+        <Head
+          ref="head"
+          head={this.state.userInfo.avatar_url}
+          userName={this.state.userInfo.login}
+        />
         <Row className="content-container">
           <Col span={3} className="control-list-container bg-blue-darkest">
-            <ControlList ref="controlList" onClickRefresh={this.onClickRefresh}/>
+            <ControlList
+              ref="controlList"
+              onClickRefresh={this.onClickRefresh}
+            />
           </Col>
           <Col span={5} className="star-list-container">
-            <StarList tableData={this.state.tableData}
-              onClickResItem={this.onClickResItem.bind(this)}/>
+            <StarList
+              tableData={this.state.tableData}
+              onClickResItem={this.onClickResItem.bind(this)}
+            />
           </Col>
           <Col span={16}>
             <div className="md-container">

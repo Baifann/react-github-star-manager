@@ -4,6 +4,8 @@ import './control-list.css';
 import StarFilter from '../star-filter/star-filter';
 import TagList from '../tag-list/tag-list';
 import Api from '../../utils/api';
+import Eventbus from '../../utils/eventbus';
+
 class ControlList extends Component {
   constructor(props) {
     super(props);
@@ -21,7 +23,38 @@ class ControlList extends Component {
   componentWillUpdate(nextProps) {}
 
   componentDidMount() {
+    this.registerEventbus();
+  }
+
+  componentWillUnmount() {
+    this.unRegisterEventbus();
+  }
+
+  /**
+   * 注册跨组件通讯事件
+   */
+  registerEventbus() {
+    this.addTagListener = Eventbus.addListener('addTag', (tag) => {
+      this.handleAddRepoTag(tag);
+    });
+  }
+
+  /**
+   * 解除组件注册
+   */
+  unRegisterEventbus() {
+    Eventbus.removeListener(this.addTagListener);
+  }
+
+  /**
+   * 如果该tag不在列表当中就需要添加
+   */
+  handleAddRepoTag(tag) {
+    const index = this.state.tagTableData.findIndex((item) => tag === item.tag);
     
+    if (index < 0) {
+      this.addTag2Web(tag);
+    }
   }
 
   /**
