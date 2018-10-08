@@ -34,7 +34,7 @@ class ControlList extends Component {
    * 注册跨组件通讯事件
    */
   registerEventbus() {
-    this.addTagListener = Eventbus.addListener('addTag', (tag) => {
+    this.addTagListener = Eventbus.addListener('addTag', tag => {
       this.handleAddRepoTag(tag);
     });
   }
@@ -50,8 +50,8 @@ class ControlList extends Component {
    * 如果该tag不在列表当中就需要添加
    */
   handleAddRepoTag(tag) {
-    const index = this.state.tagTableData.findIndex((item) => tag === item.tag);
-    
+    const index = this.state.tagTableData.findIndex(item => tag === item.tag);
+
     if (index < 0) {
       this.addTag2Web(tag);
     }
@@ -155,7 +155,12 @@ class ControlList extends Component {
   render() {
     return (
       <div className="control-list">
-        <StarFilter ref="starFilter" onClickRefresh={this.onClickRefresh} />
+        <StarFilter
+          ref="starFilter"
+          onClickRefresh={this.onClickRefresh}
+          onClickAllStars={this.props.onClickAllStars}
+          onClickUntaggedStars={this.props.onClickUntaggedStars}
+        />
         <Input
           ref="myInput"
           placeholder="请输入标签"

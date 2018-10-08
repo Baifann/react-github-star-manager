@@ -35,6 +35,11 @@
   .btn-pop-over {
     color: #b8c2cc;
   }
+
+  .active {
+    color: #21a179;
+    fill: #21a179;
+  }
 }
 
 .ant-popover-content {
@@ -43,7 +48,7 @@
     border: none;
     color: #fff;
     font-size: .875rem;
-    
+
   }
 
   .input-tag {

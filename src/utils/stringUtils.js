@@ -16,6 +16,14 @@ const StringUtils = {
       }
     }
     return (false);
+  },
+
+  /**
+   * 深拷贝
+   */
+  deepCopy(obj) {
+    const jsonObj = JSON.stringify(obj);
+    return JSON.parse(jsonObj);
   }
 }
 

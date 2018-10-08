@@ -8,6 +8,7 @@ import Head from '../../components/Head/Head';
 import ResInfo from '../../components/resInfo/resInfo';
 import ControlList from '../../components/control/control-list';
 import StarList from '../../components/star-list/star-list';
+import Eventbus from '@/utils/eventbus.js';
 
 class Star extends Component {
   constructor(props) {
@@ -15,16 +16,24 @@ class Star extends Component {
 
     this.state = {
       tableData: [],
+      originTableData: [],
       userInfo: {},
       rawMdData: ''
     };
 
     this.onClickRefresh = this.onClickRefresh.bind(this);
     this.onClickResItem = this.onClickResItem.bind(this);
+    this.onClickUntaggedStars = this.onClickUntaggedStars.bind(this);
+    this.onClickAllStars = this.onClickAllStars.bind(this);
   }
 
   componentDidMount() {
     this.getUserInfo();
+    this.registerEventbus();
+  }
+
+  componentWillUnmount() {
+    this.unRegisterEventbus();
   }
 
   getUserInfo() {
@@ -65,8 +74,11 @@ class Star extends Component {
     console.log(data);
     if (!data.data || data.data.length === 0) {
       if (this.tableData && this.tableData.length >= 0) {
+        this.originTableData = StringUtils.deepCopy(this.tableData);
+        console.log('handleGetStarSuccessResponse', this.originTableData);
         this.setState({
-          tableData: this.tableData
+          tableData: this.tableData,
+          originTableData: this.originTableData
         });
       }
       this.onRefreshEnd();
@@ -79,15 +91,26 @@ class Star extends Component {
       this.tableData = [...this.tableData, ...data.data];
     }
     console.log(data.data.length);
-    if (data.data.length !== 30) {
+    // if (data.data.length !== 30) {
+    //   this.handleLoadFinish();
+    // } else {
+    //   console.log('加载更多');
+    //   this.loadMoreStar();
+    // }
+
+    this.handleLoadFinish();
+  }
+
+  /**
+   * 处理加载完毕
+   */
+  handleLoadFinish() {
+    this.originTableData = StringUtils.deepCopy(this.tableData);
       this.setState({
-        tableData: this.tableData
+        tableData: this.tableData,
+        originTableData: this.originTableData
       });
       this.onRefreshEnd();
-    } else {
-      console.log('加载更多');
-      this.loadMoreStar();
-    }
   }
 
   /**
@@ -183,6 +206,60 @@ class Star extends Component {
     return tags.includes(tag);
   }
 
+  /**
+   * 注册跨组件通讯事件
+   */
+  registerEventbus() {
+    this.addTagItemListener = Eventbus.addListener('onClickTagItem', (tag) => {
+      this.handleClickTagItem(tag);
+    });
+  }
+
+  /**
+   * 处理点击了tag Item
+   */
+  handleClickTagItem(tagItem) {
+    const showTableData = this.filterTableDataByTag(tagItem.tag);
+
+    this.setState({
+      tableData: showTableData
+    });
+  }
+
+  /**
+   * 解除组件注册
+   */
+  unRegisterEventbus() {
+    Eventbus.removeListener(this.addTagItemListener);
+  }
+
+  /**
+   * 过滤tableData
+   */
+  filterTableDataByTag(tag) {
+    const tableData = this.originTableData.filter((item) => {
+      return item.tags && item.tags.includes(tag);
+    });
+
+    return tableData;
+  }
+
+  /**
+   * 点击显示所有数据
+   */
+  onClickAllStars() {
+    const originTableData = this.state.originTableData;
+    this.setState({
+      tableData: originTableData
+    });
+  }
+
+  /**
+   * 点击显示无tags数据
+   */
+  onClickUntaggedStars() {
+  }
+
   render() {
     return (
       <div className="star">
@@ -196,6 +273,8 @@ class Star extends Component {
             <ControlList
               ref="controlList"
               onClickRefresh={this.onClickRefresh}
+              onClickAllStars={this.onClickAllStars}
+              onClickUntaggedStars={this.onClickUntaggedStars}
             />
           </Col>
           <Col span={5} className="star-list-container">
